@@ -6,16 +6,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         List<FaixaCEP> faixas  = new ArrayList<>();
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("entrada1.txt"))){
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/entrada1.txt"))){
             String linha;
             while((linha = bufferedReader.readLine()) != null && !linha.equals("--")){
                 String[] partes = linha.split(",");
-                faixas.add(new FaixaCEP(partes[0], Integer.parseInt(partes[1]), Integer.parseInt(partes[2])));
+                String nome = partes[0];
+                int inicio = Integer.parseInt(partes[1]);
+                int fim = Integer.parseInt(partes[2]);
+                faixas.add(new FaixaCEP(nome, inicio, fim));
             }
             String cepBusca = bufferedReader.readLine();
             int cep = Integer.parseInt(cepBusca);
@@ -26,6 +27,8 @@ public class Main {
                 }
             }
             System.out.println("Cep não encontrado");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
